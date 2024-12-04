@@ -3,9 +3,11 @@ import { redirect } from "next/navigation";
 import { ReactNode } from "react";
 import { ADMIN } from "../constants/constants";
 
-export default async function AdminLayout({
+export default async function AuthLayout({
   children,
-}: Readonly<{ children: ReactNode }>) {
+}: Readonly<{
+  children: ReactNode;
+}>) {
   const supabase = createClient();
 
   const { data: authData } = await (await supabase).auth.getUser();
@@ -22,7 +24,7 @@ export default async function AdminLayout({
       return;
     }
 
-    if (data.type === ADMIN) return redirect("/");
+    if (data.type === ADMIN) return redirect("/admin");
   }
 
   return <>{children}</>;
